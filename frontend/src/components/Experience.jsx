@@ -6,7 +6,7 @@ function Experience() {
   const [error, setError] = useState("");
   const API_BASE_URL = import.meta.env.VITE_API_URL;
   useEffect(() => {
-    fetch(API_BASE_URL+"/api/experience/")
+    fetch(API_BASE_URL + "/api/experience/")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch experiences");
@@ -51,7 +51,6 @@ function Experience() {
       className="bg-slate-950 px-6 py-24 sm:px-8 lg:px-12"
     >
       <div className="mx-auto max-w-5xl">
-
         {/* Heading */}
         <div className="mb-16 text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-cyan-400">
@@ -91,7 +90,6 @@ function Experience() {
         {/* Experience Timeline */}
         {!loading && !error && experiences.length > 0 && (
           <div className="relative">
-
             {/* Timeline */}
             <div className="absolute left-3 top-0 h-full w-px bg-linear-to-b from-cyan-400 via-cyan-400/50 to-transparent sm:left-1/2 sm:-translate-x-1/2" />
 
@@ -107,16 +105,12 @@ function Experience() {
                 <div
                   key={experience.id}
                   className={`relative mb-14 flex w-full ${
-                    index % 2 === 0
-                      ? "sm:justify-start"
-                      : "sm:justify-end"
+                    index % 2 === 0 ? "sm:justify-start" : "sm:justify-end"
                   }`}
                 >
-
                   {/* Timeline Dot */}
                   <div className="absolute left-3 top-8 z-10 -translate-x-1/2 sm:left-1/2">
                     <div className="relative flex h-5 w-5 items-center justify-center">
-
                       {experience.is_current && (
                         <span className="absolute h-6 w-6 animate-ping rounded-full bg-cyan-400 opacity-30" />
                       )}
@@ -134,7 +128,6 @@ function Experience() {
                     }`}
                   >
                     <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 p-6 shadow-xl shadow-black/20 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/50">
-
                       {/* Glow */}
                       <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-cyan-400/10 blur-3xl transition-all duration-500 group-hover:bg-cyan-400/20" />
 
@@ -213,9 +206,7 @@ function Experience() {
         {/* Empty State */}
         {!loading && !error && experiences.length === 0 && (
           <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-8 text-center">
-            <p className="text-slate-400">
-              No experience records found.
-            </p>
+            <p className="text-slate-400">No experience records found.</p>
           </div>
         )}
       </div>
