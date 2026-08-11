@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Contact() {
   const [form, setForm] = useState({
     name: "",
@@ -8,6 +10,10 @@ function Contact() {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+
   const handleChange = (event) => {
     setForm({
       ...form,
@@ -15,18 +21,58 @@ function Contact() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Contact form:", form);
+    setLoading(true);
+    setSuccess("");
+    setError("");
 
-    alert("Thank you! Your message has been received.");
+    try {
+      const response = await fetch(`${API_URL}/api/contact/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error("Contact API Error:", data);
+        throw new Error("Failed to send message");
+      }
+
+      setSuccess(
+        "Thank you! Your message has been sent successfully. 📩"
+      );
+
+      setForm({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Contact Error:", error);
+
+      setError(
+        "Unable to send your message. Please try again later."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <section id="contact" className="px-6 py-24 sm:px-8 lg:px-12">
+    <section
+      id="contact"
+      className="px-6 py-24 sm:px-8 lg:px-12"
+    >
       <div className="mx-auto max-w-5xl">
 
+        {/* Heading */}
         <div className="mb-14 text-center">
           <p className="mb-2 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-400">
             Contact
@@ -39,8 +85,10 @@ function Contact() {
           <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-cyan-400" />
         </div>
 
+        {/* Content */}
         <div className="grid gap-8 lg:grid-cols-2">
 
+          {/* Left Side */}
           <div>
             <h3 className="text-2xl font-bold text-white">
               Have a project in mind?
@@ -52,28 +100,40 @@ function Contact() {
             </p>
 
             <div className="mt-8 space-y-4">
+
+              {/* Email */}
               <div className="rounded-xl border border-white/10 bg-slate-900/60 p-4">
-                <p className="text-sm text-slate-400">Email</p>
+                <p className="text-sm text-slate-400">
+                  Email
+                </p>
+
                 <p className="mt-1 text-slate-200">
                   aditya.a.jagtap77@gmail.com
                 </p>
               </div>
 
+              {/* Location */}
               <div className="rounded-xl border border-white/10 bg-slate-900/60 p-4">
-                <p className="text-sm text-slate-400">Location</p>
+                <p className="text-sm text-slate-400">
+                  Location
+                </p>
+
                 <p className="mt-1 text-slate-200">
                   Pune, Maharashtra, India
                 </p>
               </div>
+
             </div>
           </div>
 
+          {/* Form */}
           <form
             onSubmit={handleSubmit}
             className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 sm:p-8"
           >
             <div className="grid gap-5">
 
+              {/* Name */}
               <input
                 type="text"
                 name="name"
@@ -84,6 +144,7 @@ function Contact() {
                 className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400"
               />
 
+              {/* Email */}
               <input
                 type="email"
                 name="email"
@@ -94,6 +155,7 @@ function Contact() {
                 className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400"
               />
 
+              {/* Subject */}
               <input
                 type="text"
                 name="subject"
@@ -104,6 +166,7 @@ function Contact() {
                 className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400"
               />
 
+              {/* Message */}
               <textarea
                 name="message"
                 rows="5"
@@ -114,11 +177,27 @@ function Contact() {
                 className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400"
               />
 
+              {/* Success Message */}
+              {success && (
+                <div className="rounded-xl border border-green-400/20 bg-green-400/10 p-4 text-center text-green-400">
+                  {success}
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div className="rounded-xl border border-red-400/20 bg-red-400/10 p-4 text-center text-red-400">
+                  {error}
+                </div>
+              )}
+
+              {/* Submit */}
               <button
                 type="submit"
-                className="rounded-xl bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
+                disabled={loading}
+                className="rounded-xl bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </button>
 
             </div>
