@@ -14,7 +14,7 @@ load_dotenv(BASE_DIR / ".env")
 # SECRET_KEY = "@#9bxq!yd7621n*%%d$@#o$no5fpmp1-%9h@(rozs*athcrv&6"
 SECRET_KEY =os.getenv("SECRET_KEY")
 
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -53,6 +53,8 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
