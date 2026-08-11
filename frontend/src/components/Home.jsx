@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import About from "./About";
 
 const API_BASE_URL = "http://127.0.0.1:8000";
 
@@ -91,10 +90,16 @@ function Home() {
     );
   }
 
+  const handleInternalLink = (e, id) => {
+    e.preventDefault();
+    const section = document.getElementById(id);
+    if (section) section.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <main
       id="home"
-      className="relative flex h-fit items-center overflow-hidden bg-slate-950 px-6 pb-20 pt-28 sm:px-8 lg:px-12 flex-col"
+      className="relative flex min-h-[calc(100vh-80px)] items-center justify-center overflow-hidden bg-slate-950 px-6 py-12 sm:px-8 lg:px-12 flex-col"
     >
       {/* =========================================
           BACKGROUND EFFECTS
@@ -173,21 +178,20 @@ function Home() {
           <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
             {/* Resume */}
 
-            {profile?.resume && (
-              <a
-                href={getFileUrl(profile.resume)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full bg-cyan-400 px-7 py-3.5 font-bold text-slate-950 shadow-lg shadow-cyan-400/10 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300 hover:shadow-xl hover:shadow-cyan-400/20"
-              >
-                Download Resume 
-              </a>
-            )}
+            <a
+              href={profile?.resume ? getFileUrl(profile.resume) : "#"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-cyan-400 px-7 py-3.5 font-bold text-slate-950 shadow-lg shadow-cyan-400/10 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300 hover:shadow-xl hover:shadow-cyan-400/20"
+            >
+              Download Resume 
+            </a>
 
             {/* Projects */}
 
             <a
               href="#projects"
+              onClick={(e) => handleInternalLink(e, "projects")}
               className="rounded-full border border-slate-600 px-7 py-3.5 font-semibold text-slate-200 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400 hover:text-cyan-400"
             >
               View Projects 
@@ -197,6 +201,7 @@ function Home() {
 
             <a
               href="#contact"
+              onClick={(e) => handleInternalLink(e, "contact")}
               className="rounded-full border border-slate-700 px-7 py-3.5 font-semibold text-slate-300 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/60 hover:text-cyan-400"
             >
               Contact Me
@@ -318,6 +323,7 @@ function Home() {
 
       <a
         href="#about"
+        onClick={(e) => handleInternalLink(e, "about")}
         className="absolute bottom-7 right-8 hidden flex-col items-center gap-2 text-xs text-slate-600 transition hover:text-cyan-400 lg:flex"
       >
         <span>Scroll</span>
@@ -325,7 +331,6 @@ function Home() {
         <span className="h-10 w-px animate-pulse bg-cyan-400/50" />
       </a>
 
-      <About />
     </main>
   );
 }

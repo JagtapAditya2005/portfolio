@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
@@ -8,32 +9,30 @@ import Experience from "./components/Experience";
 import Certificates from "./components/Certificates";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import { Routes,Route } from "react-router-dom";
+import Section from "./components/Section";
+import BackToTop from "./components/BackToTop";
 
 function App() {
+  useEffect(() => {
+    if (window.location.hash) {
+      window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+    }
+  }, []);
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-slate-950 text-white relative">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/about" element={<About />}/>
-        <Route path="/skills" element={<Skills />}/>
-        <Route path="/projects" element={<Projects />}/>
-        <Route path="/education" element={<Education />}/>
-        <Route path="/experience" element={<Experience />}/>
-        <Route path="/certificates" element={<Certificates />}/>
-        <Route path="/contact" element={<Contact />}/>
-      </Routes>
-
-      {/* <Home />
-      <About />
-      <Skills />
-      <Projects />
-      <Education />
-      <Experience />
-      <Certificates />
-      <Contact />
-      <Footer /> */}
+      <main>
+        <Section><Home /></Section>
+        <Section><About /></Section>
+        <Section><Skills /></Section>
+        <Section><Projects /></Section>
+        <Section><Education /></Section>
+        <Section><Experience /></Section>
+        <Section><Certificates /></Section>
+        <Section><Contact /></Section>
+      </main>
+      <Footer />
+      <BackToTop />
     </div>
   );
 }

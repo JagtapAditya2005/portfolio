@@ -9,6 +9,10 @@ function Footer() {
 
         <a
           href="#home"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
           className="text-sm font-medium text-cyan-400 transition hover:text-cyan-300"
         >
           Back to Top ↑
