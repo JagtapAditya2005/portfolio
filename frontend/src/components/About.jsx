@@ -206,7 +206,7 @@ function About() {
                 </div>
 
                 <h4 className="mt-6 text-3xl font-black text-cyan-400">
-                  8.95
+                  9.38
                 </h4>
 
                 <p className="mt-1 text-sm text-slate-400">
