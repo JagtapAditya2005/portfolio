@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function Contact() {
   const [form, setForm] = useState({
@@ -29,7 +29,7 @@ function Contact() {
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}/api/contact/`, {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ function Contact() {
 
       if (!response.ok) {
         console.error("Contact API Error:", data);
-        throw new Error("Failed to send message");
+        throw new Error(data.error || "Failed to send message");
       }
 
       setSuccess(
