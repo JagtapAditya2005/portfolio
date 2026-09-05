@@ -6,4 +6,7 @@ html {
 
 body::-webkit-scrollbar{
     scroll-behavior: smooth;
-}
+}
+body::-webkit-scrollbar{
+    display: none;
+}

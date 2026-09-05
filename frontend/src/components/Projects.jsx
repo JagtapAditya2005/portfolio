@@ -48,10 +48,10 @@ function Projects() {
                     )}
                     <div className="mt-7 flex flex-wrap gap-3">
                       {project.github_url && (
-                        <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10 hover:text-cyan-400">GitHub ↗</a>
+                        <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="rounded-full border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-200 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10 hover:text-cyan-400">GitHub</a>
                       )}
                       {project.demo_url && (
-                        <a href={project.demo_url} target="_blank" rel="noopener noreferrer" className="rounded-full bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20">Live Demo ↗</a>
+                        <a href={project.demo_url} target="_blank" rel="noopener noreferrer" className="rounded-full bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20">Live Demo</a>
                       )}
                     </div>
                     <div className="mt-6 h-px w-0 bg-linear-to-r from-cyan-400 to-transparent transition-all duration-500 group-hover:w-full" />

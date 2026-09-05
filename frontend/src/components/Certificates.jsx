@@ -43,7 +43,7 @@ function Certificates() {
                   <div className="mt-6 text-center">
                     <a href={cert.certificate_url || cert.certificate_image} target="_blank" rel="noopener noreferrer"
                       className="inline-flex items-center rounded-full bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 transition-all duration-300 hover:bg-cyan-300 hover:shadow-lg hover:shadow-cyan-400/20">
-                      View Certificate ↗
+                      View Certificate
                     </a>
                   </div>
                   <div className="mt-6 h-px w-0 bg-linear-to-r from-cyan-400 to-transparent transition-all duration-500 group-hover:w-full" />

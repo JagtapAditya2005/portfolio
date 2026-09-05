@@ -12,7 +12,7 @@ export const profile = {
   profile_image: "/media/profile/profile.png",
   resume: "/media/resume/resume.pdf",
   github_url: "https://github.com/JagtapAditya2005",
-  linkedin_url: "https://www.linkedin.com/in/adityajagtap",
+  linkedin_url: "https://www.linkedin.com/in/adityajagtap77",
   email: "aditya.a.jagtap77@gmail.com",
   phone: "9699109602",
   location: "Chakan, Pune",
@@ -104,6 +104,27 @@ export const skills = [
     percentage: 80,
     icon: "📈",
   },
+  {
+    id: 13,
+    name: "OpenCV",
+    category: "Data Science",
+    percentage: 80,
+    icon: "👁️",
+  },
+  {
+    id: 14,
+    name: "Fast API",
+    category: "Backend",
+    percentage: 80,
+    icon: "⚡",
+  },
+  {
+    id: 15,
+    name: "TailwindCSS",
+    category: "Frontend",
+    percentage: 80,
+    icon: "🖌️",
+  },
 ];
 
 
@@ -180,10 +201,10 @@ export const projects = [
     title: "Exam Portal",
     description:
       "Online examination system built with Python and Django for conducting exams, managing students, and handling examination results.",
-    technologies: "Python, Django, HTML, CSS, JavaScript",
-    image: "/media/projects/ChatGPT_Image_Jul_14_2026_03_02_19_PM.png",
-    github_url: "https://github.com/adityajagtap",
-    demo_url: "https://google.com",
+    technologies: "Python, Django, HTML, CSS, JavaScript, ReactJS, TailwindCSS",
+    image: "/media/projects/exam-app-img.jpeg",
+    github_url: "https://github.com/JagtapAditya2005/exam-portal",
+    demo_url: "https://exam-portal-by-aditya.vercel.app",
     featured: false,
   },
   {
@@ -192,7 +213,7 @@ export const projects = [
     description:
       "Full-stack e-commerce platform built using Django, React.js, MongoDB and Tailwind CSS with a responsive and user-friendly shopping experience.",
     technologies: "Python, Django, React.js, Tailwind CSS, JavaScript",
-    image: "/media/projects/ChatGPT_Image_Jul_14_2026_10_51_50_PM.png",
+    image: "/media/projects/exam-app-img.jpeg",
     github_url: "https://github.com/adityajagtap",
     demo_url: "https://google.com",
     featured: false,

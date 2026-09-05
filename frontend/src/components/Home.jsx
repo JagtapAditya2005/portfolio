@@ -163,7 +163,7 @@ function Home() {
                 rel="noopener noreferrer"
                 className="rounded-full border border-white/10 bg-slate-900/60 px-5 py-2.5 text-sm font-medium text-slate-300 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:text-cyan-400"
               >
-                GitHub ↗
+                GitHub
               </a>
             )}
 
@@ -174,7 +174,7 @@ function Home() {
                 rel="noopener noreferrer"
                 className="rounded-full border border-white/10 bg-slate-900/60 px-5 py-2.5 text-sm font-medium text-slate-300 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:text-cyan-400"
               >
-                LinkedIn ↗
+                LinkedIn
               </a>
             )}
           </div>

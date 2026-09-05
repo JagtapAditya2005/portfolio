@@ -55,7 +55,7 @@ function Experience() {
                       </div>
                       <h3 className="relative mt-5 text-xl font-bold text-white transition-colors duration-300 group-hover:text-cyan-300 sm:text-2xl">{exp.job_title}</h3>
                       {exp.company_url ? (
-                        <a href={exp.company_url} target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-block font-semibold text-cyan-400 hover:text-cyan-300">{exp.company} ↗</a>
+                        <a href={exp.company_url} target="_blank" rel="noopener noreferrer" className="relative mt-2 inline-block font-semibold text-cyan-400 hover:text-cyan-300">{exp.company}</a>
                       ) : (
                         <p className="relative mt-2 font-semibold text-cyan-400">{exp.company}</p>
                       )}
