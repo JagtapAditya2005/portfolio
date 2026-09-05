@@ -64,7 +64,7 @@ export const skills = [
   },
   {
     id: 7,
-    name: "REST API",
+    name: "REST APIs",
     category: "Other",
     percentage: 80,
     icon: "🔗",
@@ -92,7 +92,7 @@ export const skills = [
   },
   {
     id: 11,
-    name: "SQL",
+    name: "PostgreSQL",
     category: "Database",
     percentage: 85,
     icon: "🗄️",
@@ -124,6 +124,41 @@ export const skills = [
     category: "Frontend",
     percentage: 80,
     icon: "🖌️",
+  },
+  {
+    id: 16,
+    name: "MySQL",
+    category: "Database",
+    percentage: 80,
+    icon: "🗄️",
+  },
+  {
+    id: 17,
+    name: "MongoDB",
+    category: "Database",
+    percentage: 80,
+    icon: "🗄️",
+  },
+  {
+    id: 18,
+    name: "VS Code",
+    category: "Tools",
+    percentage: 80,
+    icon: "</>",
+  },
+  {
+    id: 19,
+    name: "Postman",
+    category: "Tools",
+    percentage: 80,
+    icon: "🧪",
+  },
+  {
+    id: 20,
+    name: "Problem Solving",
+    category: "Other",
+    percentage: 80,
+    icon: "🧠",
   },
 ];
 
@@ -181,7 +216,7 @@ export const experience = [
   {
     id: 2,
     job_title: "Data Analyst Intern",
-    company: "Sufthub YessInfotechPvt.Ltd.",
+    company: "Softhub Yess Infotech Pvt.Ltd.",
     location: "Hadapsar, Pune",
     start_date: "2025-01-01",
     end_date: "2026-02-05",
