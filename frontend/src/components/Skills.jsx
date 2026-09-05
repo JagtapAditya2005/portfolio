@@ -4,130 +4,211 @@ import { skills } from "../data/portfolioData";
 function Skills() {
   const [activeCategory, setActiveCategory] = useState("All");
 
+  // ============================================================
+  // CATEGORIES
+  // ============================================================
+
   const categories = useMemo(() => {
-    const unique = [...new Set(skills.map((s) => s.category).filter(Boolean))];
+    const unique = [
+      ...new Set(skills.map((skill) => skill.category).filter(Boolean)),
+    ];
+
     return ["All", ...unique];
   }, []);
 
-  const filteredSkills = useMemo(() => {
-    if (activeCategory === "All") return skills;
-    return skills.filter((s) => s.category === activeCategory);
-  }, [activeCategory]);
+  // ============================================================
+  // GROUP SKILLS
+  // ============================================================
 
-  const averageSkill = useMemo(() => {
-    if (!skills.length) return 0;
-    const total = skills.reduce((sum, s) => sum + Number(s.percentage || 0), 0);
-    return Math.round(total / skills.length);
+  const groupedSkills = useMemo(() => {
+    return skills.reduce((groups, skill) => {
+      const category = skill.category || "Other";
+
+      if (!groups[category]) {
+        groups[category] = [];
+      }
+
+      groups[category].push(skill);
+
+      return groups;
+    }, {});
   }, []);
 
-  const getLevel = (p) => {
-    if (p >= 90) return "Expert";
-    if (p >= 80) return "Advanced";
-    if (p >= 70) return "Intermediate";
-    if (p >= 60) return "Familiar";
-    return "Learning";
+  // ============================================================
+  // VISIBLE GROUPS
+  // ============================================================
+
+  const visibleGroups = useMemo(() => {
+    if (activeCategory === "All") {
+      return Object.entries(groupedSkills);
+    }
+
+    return Object.entries(groupedSkills).filter(
+      ([category]) => category === activeCategory
+    );
+  }, [activeCategory, groupedSkills]);
+
+  // ============================================================
+  // CATEGORY ICON
+  // ============================================================
+
+  const getCategoryIcon = (category) => {
+    const icons = {
+      Frontend: "🎨",
+      Backend: "⚙️",
+      Tools: "🛠️",
+      Competencies: "💡",
+      Database: "🗄️",
+      DevOps: "🚀",
+      "AI & ML": "🤖",
+      "Machine Learning": "🧠",
+      Other: "📦",
+    };
+
+    return icons[category] || "🔹";
   };
 
+  // ============================================================
+  // RETURN
+  // ============================================================
+
   return (
-    <section id="skills" className="relative overflow-hidden bg-slate-950 px-6 py-24 sm:px-8 lg:px-12">
+    <section
+      id="skills"
+      className="relative w-full overflow-hidden bg-slate-950 px-4 py-16 sm:px-6 sm:py-20 lg:px-12 lg:py-24"
+    >
+      {/* BACKGROUND GLOW */}
+
       <div className="pointer-events-none absolute left-0 top-20 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
+
       <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl">
-        {/* HEADER */}
-        <div className="mb-14 text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-cyan-400">My Skills</p>
-          <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl md:text-5xl">Technologies I Work With</h2>
+
+        {/* ======================================================
+            HEADER
+        ====================================================== */}
+
+        <div className="mb-12 text-center sm:mb-14">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400 sm:text-sm sm:tracking-[0.3em]">
+            My Skills
+          </p>
+
+          <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl md:text-5xl">
+            Technologies I Work With
+          </h2>
+
           <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/40" />
+
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-            A collection of technologies, frameworks and tools I use to build modern applications and solve real-world problems.
+            A collection of technologies, frameworks and tools I use to build
+            modern applications and solve real-world problems.
           </p>
         </div>
 
+        {/* ======================================================
+            CATEGORY FILTER
+        ====================================================== */}
+
+        <div className="mb-12 flex gap-2 overflow-x-auto pb-3 sm:flex-wrap sm:justify-center sm:gap-3 sm:overflow-visible">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setActiveCategory(category)}
+              className={`shrink-0 rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                activeCategory === category
+                  ? "border-transparent bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30"
+                  : "border-slate-700 bg-slate-900/70 text-slate-400 hover:border-slate-500 hover:text-white"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* ======================================================
+            GROUPED SKILLS
+        ====================================================== */}
+
         {skills.length > 0 && (
-          <>
-            {/* STATISTICS */}
-            <div className="mb-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-              <div className="group rounded-2xl border border-white/10 bg-slate-900/50 p-5 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
-                <div className="flex items-center justify-between"><span className="text-2xl">💻</span><span className="text-xs text-slate-600">01</span></div>
-                <p className="mt-4 text-3xl font-black text-cyan-400">{skills.length}+</p>
-                <p className="mt-1 text-xs text-slate-500">Technologies</p>
-              </div>
-              <div className="group rounded-2xl border border-white/10 bg-slate-900/50 p-5 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
-                <div className="flex items-center justify-between"><span className="text-2xl">📊</span><span className="text-xs text-slate-600">02</span></div>
-                <p className="mt-4 text-3xl font-black text-cyan-400">{averageSkill}%</p>
-                <p className="mt-1 text-xs text-slate-500">Average Proficiency</p>
-              </div>
-              <div className="group rounded-2xl border border-white/10 bg-slate-900/50 p-5 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
-                <div className="flex items-center justify-between"><span className="text-2xl">🧩</span><span className="text-xs text-slate-600">03</span></div>
-                <p className="mt-4 text-3xl font-black text-cyan-400">{categories.length - 1}</p>
-                <p className="mt-1 text-xs text-slate-500">Skill Categories</p>
-              </div>
-              <div className="group rounded-2xl border border-white/10 bg-slate-900/50 p-5 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30">
-                <div className="flex items-center justify-between"><span className="text-2xl">🚀</span><span className="text-xs text-slate-600">04</span></div>
-                <p className="mt-4 text-xl font-black text-cyan-400">Full Stack</p>
-                <p className="mt-1 text-xs text-slate-500">Primary Focus</p>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {visibleGroups.map(([category, categorySkills]) => (
+              <div
+                key={category}
+                className="group rounded-2xl border border-slate-800 bg-slate-900/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-slate-700 hover:bg-slate-900/70 sm:p-7"
+              >
+                {/* CATEGORY TITLE */}
 
-            {/* CATEGORY FILTER */}
-            <div className="mb-10 flex flex-wrap justify-center gap-3">
-              {categories.map((category) => (
-                <button key={category} onClick={() => setActiveCategory(category)}
-                  className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
-                    activeCategory === category
-                      ? "bg-cyan-400 text-slate-950 shadow-lg shadow-cyan-400/20"
-                      : "border border-white/10 bg-slate-900/60 text-slate-400 hover:border-cyan-400/30 hover:text-cyan-400"
-                  }`}>{category}</button>
-              ))}
-            </div>
-
-            {/* SKILL CARDS */}
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredSkills.map((skill, index) => {
-                const percentage = Number(skill.percentage || 0);
-                const level = getLevel(percentage);
-                return (
-                  <div key={skill.id} className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 p-6 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-slate-900/80">
-                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan-400/5 blur-2xl transition duration-500 group-hover:bg-cyan-400/15" />
-                    <div className="relative flex items-start justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/10 bg-cyan-400/10 text-xl text-cyan-400 transition duration-300 group-hover:scale-110">{skill.icon || "⚡"}</div>
-                        <div>
-                          <h3 className="font-bold text-white">{skill.name}</h3>
-                          <p className="mt-1 text-xs text-slate-500">{skill.category || "Technology"}</p>
-                        </div>
-                      </div>
-                      <span className="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-bold text-cyan-400">{percentage}%</span>
-                    </div>
-                    <div className="mt-6 flex items-center justify-between">
-                      <span className="text-xs font-medium text-slate-500">Proficiency</span>
-                      <span className="text-xs font-semibold text-cyan-400">{level}</span>
-                    </div>
-                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
-                      <div className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-cyan-400 to-cyan-300 transition-all duration-1000 ease-out" style={{ width: `${percentage}%` }} />
-                    </div>
-                    <div className="mt-5 flex items-center justify-between">
-                      <span className="text-[11px] text-slate-600">Skill #{String(index + 1).padStart(2, "0")}</span>
-                      <span className="text-xs text-slate-600 transition group-hover:text-cyan-400">●</span>
-                    </div>
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10 text-lg">
+                    {getCategoryIcon(category)}
                   </div>
-                );
-              })}
-            </div>
 
-            {filteredSkills.length === 0 && (
-              <div className="py-12 text-center"><p className="text-slate-500">No skills found in this category.</p></div>
-            )}
+                  <div>
+                    <h3 className="text-xl font-bold text-white sm:text-2xl">
+                      {category}
+                    </h3>
 
-            <div className="mt-12 text-center">
-              <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-slate-900/50 px-5 py-3">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
-                <span className="text-xs text-slate-400">Always learning • Always building • Always improving</span>
+                    <p className="mt-1 text-xs text-slate-500">
+                      {categorySkills.length}{" "}
+                      {categorySkills.length === 1
+                        ? "skill"
+                        : "skills"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* SKILL TAGS */}
+
+                <div className="flex flex-wrap gap-3">
+                  {categorySkills.map((skill, index) => (
+                    <div
+                      key={skill.id || `${category}-${index}`}
+                      className="group/skill rounded-full border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm font-semibold text-slate-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-400/50 hover:bg-cyan-400/10 hover:text-cyan-300"
+                    >
+                      <div className="flex items-center gap-2">
+                        {skill.icon && (
+                          <span className="text-sm">
+                            {skill.icon}
+                          </span>
+                        )}
+
+                        <span>{skill.name}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </>
+            ))}
+          </div>
         )}
+
+        {/* ======================================================
+            EMPTY STATE
+        ====================================================== */}
+
+        {visibleGroups.length === 0 && (
+          <div className="py-12 text-center">
+            <p className="text-slate-500">
+              No skills found in this category.
+            </p>
+          </div>
+        )}
+
+        {/* ======================================================
+            FOOTER MESSAGE
+        ====================================================== */}
+
+        <div className="mt-12 text-center">
+          <div className="inline-flex max-w-full items-center gap-3 rounded-full border border-white/10 bg-slate-900/50 px-4 py-3 sm:px-5">
+            <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-cyan-400" />
+
+            <span className="text-xs text-slate-400">
+              Always learning • Always building • Always improving
+            </span>
+          </div>
+        </div>
       </div>
     </section>
   );
